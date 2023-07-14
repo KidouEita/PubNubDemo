@@ -55,7 +55,10 @@ class ChatViewModel @Inject constructor(private val dataStore: PreferencesDataSt
                     TAG,
                     "Received msg:[${pnMessageResult.message}] from ${pnMessageResult.publisher}"
                 )
-                _msgList.value += pnMessageResult.message.toString()
+//                _msgList.value += pnMessageResult.message.toString()
+                val messageBody = pnMessageResult.message.asJsonObject.getAsJsonObject("pn_gcm")
+                    .getAsJsonObject("notification")["body"]
+                _msgList.value += "${pnMessageResult.publisher} : $messageBody"
 
 //                msgList.add("${pnMessageResult.publisher}: ${pnMessageResult.message}")
 //                println("Message payload: ${pnMessageResult.message}")
